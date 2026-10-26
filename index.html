@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medique · Smart Clinic Appointment & Queue Management</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: #F7FAFC;
+            color: #1E293B;
+            line-height: 1.5;
+        }
+
+        /* Professional healthcare color palette */
+        :root {
+            --primary: #0F6CBF;
+            --primary-dark: #0A5599;
+            --primary-light: #E8F2FE;
+            --secondary: #5AA9E6;
+            --accent: #34D399;
+            --danger: #EF4444;
+            --warning: #F59E0B;
+            --gray-50: #F8FAFC;
+            --gray-100: #F1F5F9;
+            --gray-200: #E2E8F0;
+            --gray-300: #CBD5E1;
+            --gray-400: #94A3B8;
+            --gray-500: #64748B;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1E293B;
+            --gray-900: #0F172A;
+            --white: #FFFFFF;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+            --radius-lg: 16px;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ---------- HEADER / NAVIGATION ---------- */
+        .navbar {
+            background-color: var(--white);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 72px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+            letter-spacing: -0.02em;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        .logo span {
+            color: var(--gray-800);
+            font-weight: 400;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray-600);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1.5px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-light);
+        }
+
+        .btn-block {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 0.85rem;
+        }
+
+        /* ---------- HERO SECTION ---------- */
+        .hero {
+            padding: 64px 0 48px;
+            background: linear-gradient(145deg, #F0F7FF 0%, #FFFFFF 100%);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--gray-900);
+            margin-bottom: 20px;
+        }
+
+        .hero-content h1 span {
+            color: var(--primary);
+        }
+
+        .hero-content p {
+            font-size: 1.15rem;
+            color: var(--gray-600);
+            margin-bottom: 32px;
+            max-width: 500px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .hero-visual {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 28px;
+            border: 1px solid var(--gray-200);
+        }
+
+        .token-preview {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .token-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .token-header h3 {
+            font-size: 1rem;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .token-badge {
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .token-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+        }
+
+        .token-label {
+            color: var(--gray-500);
+            font-size: 0.95rem;
+        }
+
+        .token-value {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--gray-900);
+        }
+
+        .token-value.highlight {
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .queue-progress {
+            margin-top: 8px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: var(--gray-200);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            width: 60%;
+        }
+
+        /* ---------- FEATURES ---------- */
+        .section {
+            padding: 64px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 12px;
+        }
+
+        .section-header p {
+            color: var(--gray-500);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 28px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-200);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--gray-800);
+        }
+
+        .feature-card p {
+            color: var(--gray-500);
+            font-size: 0.95rem;
+        }
+
+        /* ---------- DOCTOR CARDS (FIND DOCTOR) ---------- */
+        .doctors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .doctor-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-200);
+            overflow: hidden;
+            transition: box-shadow 0.2s;
+        }
+
+        .doctor-card:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .doctor-img {
+            height: 140px;
+            background: linear-gradient(135deg, var(--primary-light), #D4E8FF);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 3rem;
+        }
+
+        .doctor-info {
+            padding: 20px;
+        }
+
+        .doctor-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .doctor-specialty {
+            color: var(--primary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin: 4px 0 8px;
+        }
+
+        .doctor-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 0.85rem;
+            color: var(--gray-500);
+            margin-bottom: 12px;
+        }
+
+        .doctor-meta i {
+            margin-right: 4px;
+            color: var(--primary);
+        }
+
+        .availability-badge {
+            display: inline-block;
+            background: #ECFDF5;
+            color: #059669;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .doctor-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 12px;
+            border-top: 1px solid var(--gray-100);
+        }
+
+        .fee {
+            font-weight: 700;
+            color: var(--gray-800);
+        }
+
+        /* ---------- DASHBOARD CARDS ---------- */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-200);
+            padding: 24px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .card-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .token-large {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .token-sub {
+            color: var(--gray-500);
+            font-size: 0.9rem;
+        }
+
+        .queue-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 12px;
+            background: var(--gray-50);
+            border-radius: 10px;
+        }
+
+        .stat-value {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--gray-800);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .queue-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .queue-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: var(--gray-50);
+            border-radius: 10px;
+            font-size: 0.95rem;
+        }
+
+        .queue-item.current {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary);
+        }
+
+        .token-badge-small {
+            background: var(--white);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* ---------- QUEUE TRACKER ---------- */
+        .queue-tracker {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--gray-200);
+            padding: 32px;
+        }
+
+        .queue-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .queue-token-display {
+            display: flex;
+            gap: 48px;
+            margin-bottom: 32px;
+        }
+
+        .queue-token-box {
+            text-align: center;
+        }
+
+        .queue-token-box .label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--gray-500);
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .queue-token-box .number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .queue-token-box .number.secondary {
+            color: var(--gray-800);
+        }
+
+        .queue-visual {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 24px 0;
+            padding: 20px;
+            background: var(--gray-50);
+            border-radius: var(--radius);
+        }
+
+        .token-pill {
+            padding: 8px 16px;
+            background: var(--white);
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-200);
+            color: var(--gray-700);
+        }
+
+        .token-pill.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .token-pill.yours {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .arrow {
+            color: var(--gray-400);
+            font-size: 0.8rem;
+        }
+
+        /* ---------- APPOINTMENT HISTORY TABLE ---------- */
+        .table-wrapper {
+            overflow-x: auto;
+            background: white;
+            border-radius: var(--radius);
+            border: 1px solid var(--gray-200);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        th {
+            text-align: left;
+            padding: 16px;
+            background: var(--gray-50);
+            color: var(--gray-500);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid var(--gray-100);
+            color: var(--gray-700);
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-upcoming { background: #E8F2FE; color: #0F6CBF; }
+        .status-waiting { background: #FEF3C7; color: #B45309; }
+        .status-completed { background: #ECFDF5; color: #059669; }
+        .status-cancelled { background: #FEF2F2; color: #B91C1C; }
+
+        /* ---------- FOOTER ---------- */
+        .footer {
+            background: var(--white);
+            border-top: 1px solid var(--gray-200);
+            padding: 48px 0 24px;
+            margin-top: 64px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand p {
+            color: var(--gray-500);
+            font-size: 0.9rem;
+            margin: 16px 0;
+            max-width: 300px;
+        }
+
+        .footer h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: var(--gray-500);
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            padding-top: 24px;
+            border-top: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--gray-400);
+            font-size: 0.85rem;
+        }
+
+        /* ---------- RESPONSIVE ---------- */
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+            .queue-token-display {
+                gap: 24px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ---------- UTILS ---------- */
+        .mt-4 { margin-top: 16px; }
+        .mt-6 { margin-top: 24px; }
+        .mb-4 { margin-bottom: 16px; }
+        .text-center { text-align: center; }
+        .flex { display: flex; }
+        .justify-between { justify-content: space-between; }
+        .items-center { align-items: center; }
+        .gap-2 { gap: 8px; }
+        .gap-4 { gap: 16px; }
+    </style>
+</head>
+<body>
+
+    <!-- ================= NAVIGATION ================= -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>Medique</span>
+            </div>
+            <nav class="nav-links">
+                <a href="#" class="active">Home</a>
+                <a href="#">Find a Doctor</a>
+                <a href="#">Appointments</a>
+                <a href="#">Queue Tracker</a>
+                <a href="#">About</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="#" class="btn btn-outline btn-sm">Log in</a>
+                <a href="#" class="btn btn-primary btn-sm">Sign up</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= HERO SECTION ================= -->
+    <section class="hero">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <h1>Smart Clinic Appointments & <span>Queue Management</span></h1>
+                <p>Medique reduces patient waiting time with intelligent scheduling, real-time queue tracking, and seamless appointment booking.</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary">Book Appointment <i class="fas fa-arrow-right"></i></a>
+                    <a href="#" class="btn btn-outline">Find a Doctor</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="token-preview">
+                    <div class="token-header">
+                        <h3>Live Queue Preview</h3>
+                        <span class="token-badge"><i class="fas fa-circle" style="color:#34D399;font-size:0.5rem;margin-right:4px;"></i> LIVE</span>
+                    </div>
+                    <div class="token-row">
+                        <span class="token-label">Current Token</span>
+                        <span class="token-value highlight">A-18</span>
+                    </div>
+                    <div class="token-row">
+                        <span class="token-label">Your Token</span>
+                        <span class="token-value">A-27</span>
+                    </div>
+                    <div class="token-row">
+                        <span class="token-label">Estimated Wait</span>
+                        <span class="token-value" style="font-size:1.1rem;color:var(--warning);">40 min</span>
+                    </div>
+                    <div class="queue-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 45%;"></div>
+                        </div>
+                    </div>
+                    <div class="token-row" style="border-top:1px solid var(--gray-200);padding-top:12px;">
+                        <span class="token-label">Status</span>
+                        <span class="token-badge" style="background:#FEF3C7;color:#B45309;">WAITING</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= FEATURES ================= -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Medique?</h2>
+                <p>Designed for modern clinics to eliminate waiting room chaos and improve patient experience.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-clock"></i></div>
+                    <h3>Real-time Queue</h3>
+                    <p>Track your token position and estimated waiting time live from your phone.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-calendar-check"></i></div>
+                    <h3>Instant Booking</h3>
+                    <p>Find a doctor, pick a slot, and get your appointment token in seconds.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-user-md"></i></div>
+                    <h3>Verified Doctors</h3>
+                    <p>Browse detailed doctor profiles with specializations and schedules.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-bell"></i></div>
+                    <h3>Smart Notifications</h3>
+                    <p>Get alerts when your turn is near, so you never miss your slot.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= FIND DOCTOR ================= -->
+    <section class="section" style="background: var(--gray-50);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Find a Doctor</h2>
+                <p>Search by specialization, availability, and more.</p>
+            </div>
+            <!-- Search bar mock -->
+            <div style="display:flex;gap:12px;margin-bottom:32px;flex-wrap:wrap;">
+                <input type="text" placeholder="Search doctor name or specialty..." style="flex:1;padding:14px 20px;border:1px solid var(--gray-300);border-radius:30px;font-size:1rem;background:white;">
+                <select style="padding:14px 20px;border:1px solid var(--gray-300);border-radius:30px;font-size:1rem;background:white;color:var(--gray-600);">
+                    <option>All Specialties</option>
+                    <option>Cardiology</option>
+                    <option>Dermatology</option>
+                    <option>Neurology</option>
+                    <option>Pediatrics</option>
+                </select>
+                <button class="btn btn-primary" style="padding:14px 28px;">Search</button>
+            </div>
+            <div class="doctors-grid">
+                <!-- Doctor 1 -->
+                <div class="doctor-card">
+                    <div class="doctor-img">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="doctor-info">
+                        <div class="doctor-name">Dr. Ahmed Rahman</div>
+                        <div class="doctor-specialty">Cardiology</div>
+                        <div class="doctor-meta">
+                            <span><i class="fas fa-briefcase"></i> 12 yrs</span>
+                            <span><i class="fas fa-dollar-sign"></i> $80</span>
+                        </div>
+                        <span class="availability-badge"><i class="fas fa-check-circle"></i> Available Today</span>
+                        <div class="doctor-footer">
+                            <span class="fee">$80</span>
+                            <a href="#" class="btn btn-primary btn-sm">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Doctor 2 -->
+                <div class="doctor-card">
+                    <div class="doctor-img">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="doctor-info">
+                        <div class="doctor-name">Dr. Sarah Chen</div>
+                        <div class="doctor-specialty">Dermatology</div>
+                        <div class="doctor-meta">
+                            <span><i class="fas fa-briefcase"></i> 8 yrs</span>
+                            <span><i class="fas fa-dollar-sign"></i> $65</span>
+                        </div>
+                        <span class="availability-badge"><i class="fas fa-check-circle"></i> Available Today</span>
+                        <div class="doctor-footer">
+                            <span class="fee">$65</span>
+                            <a href="#" class="btn btn-primary btn-sm">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Doctor 3 -->
+                <div class="doctor-card">
+                    <div class="doctor-img">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="doctor-info">
+                        <div class="doctor-name">Dr. Michael Okonkwo</div>
+                        <div class="doctor-specialty">Neurology</div>
+                        <div class="doctor-meta">
+                            <span><i class="fas fa-briefcase"></i> 15 yrs</span>
+                            <span><i class="fas fa-dollar-sign"></i> $120</span>
+                        </div>
+                        <span class="availability-badge"><i class="fas fa-check-circle"></i> Available Tomorrow</span>
+                        <div class="doctor-footer">
+                            <span class="fee">$120</span>
+                            <a href="#" class="btn btn-primary btn-sm">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= PATIENT DASHBOARD ================= -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Patient Dashboard</h2>
+                <p>Your upcoming appointment and live queue status at a glance.</p>
+            </div>
+            <div class="dashboard-grid">
+                <!-- Upcoming appointment card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-calendar-alt" style="margin-right:8px;color:var(--primary);"></i> Upcoming Appointment</h3>
+                        <span class="token-badge" style="background:#E8F2FE;color:var(--primary);">Today</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+                        <div>
+                            <div style="font-weight:600;font-size:1.1rem;">Dr. Ahmed Rahman</div>
+                            <div style="color:var(--gray-500);font-size:0.9rem;margin-top:4px;">Cardiology · Room 204</div>
+                            <div style="color:var(--gray-500);font-size:0.9rem;margin-top:4px;"><i class="fas fa-clock"></i> 5:30 PM - 6:00 PM</div>
+                        </div>
+                        <div style="text-align:right;">
+                            <div class="token-large" style="font-size:2.4rem;">A-27</div>
+                            <div class="token-sub">Token Number</div>
+                        </div>
+                    </div>
+                    <div class="queue-stats" style="margin-top:24px;">
+                        <div class="stat-item">
+                            <div class="stat-value">A-18</div>
+                            <div class="stat-label">Current</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">8</div>
+                            <div class="stat-label">Ahead</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">40m</div>
+                            <div class="stat-label">Est. Wait</div>
+                        </div>
+                    </div>
+                    <div style="margin-top:20px;">
+                        <div style="display:flex;justify-content:space-between;font-size:0.85rem;color:var(--gray-500);margin-bottom:8px;">
+                            <span>Queue Progress</span>
+                            <span>60%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width:60%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Queue snapshot card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-users" style="margin-right:8px;color:var(--primary);"></i> Live Queue</h3>
+                        <span class="token-badge" style="background:#FEF3C7;color:#B45309;">LIVE</span>
+                    </div>
+                    <div class="queue-list">
+                        <div class="queue-item current">
+                            <span><i class="fas fa-circle" style="color:var(--primary);font-size:0.5rem;margin-right:8px;"></i> A-18 (Current)</span>
+                            <span class="token-badge-small">NOW</span>
+                        </div>
+                        <div class="queue-item">
+                            <span>A-19</span>
+                            <span class="token-badge-small" style="color:var(--gray-400);">Next</span>
+                        </div>
+                        <div class="queue-item">
+                            <span>A-20</span>
+                            <span class="token-badge-small" style="color:var(--gray-400);">Waiting</span>
+                        </div>
+                        <div class="queue-item">
+                            <span>A-21</span>
+                            <span class="token-badge-small" style="color:var(--gray-400);">Waiting</span>
+                        </div>
+                        <div class="queue-item" style="background:var(--primary-light);border-left:4px solid var(--accent);">
+                            <span><strong>Your Token: A-27</strong></span>
+                            <span class="token-badge-small" style="background:var(--accent);color:white;">YOU</span>
+                        </div>
+                    </div>
+                    <div style="margin-top:16px;display:flex;justify-content:space-between;align-items:center;">
+                        <span style="color:var(--gray-500);font-size:0.9rem;">Total waiting: 9</span>
+                        <a href="#" class="btn btn-outline btn-sm">View Full Queue</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= QUEUE TRACKER ================= -->
+    <section class="section" style="background: var(--gray-50);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Queue Tracker</h2>
+                <p>Real-time token progress and estimated waiting time.</p>
+            </div>
+            <div class="queue-tracker">
+                <div class="queue-header">
+                    <div>
+                        <span style="font-weight:600;font-size:1.1rem;">Dr. Ahmed Rahman · Cardiology</span>
+                        <div style="color:var(--gray-500);font-size:0.9rem;">Today, 27 Oct 2026 · Room 204</div>
+                    </div>
+                    <span class="token-badge" style="background:#34D399;color:white;padding:6px 16px;"><i class="fas fa-circle" style="font-size:0.5rem;margin-right:6px;"></i> Doctor Active</span>
+                </div>
+
+                <div class="queue-token-display">
+                    <div class="queue-token-box">
+                        <div class="label">Current Token</div>
+                        <div class="number">A-18</div>
+                    </div>
+                    <div class="queue-token-box">
+                        <div class="label">Your Token</div>
+                        <div class="number secondary">A-27</div>
+                    </div>
+                    <div class="queue-token-box">
+                        <div class="label">Patients Ahead</div>
+                        <div class="number secondary" style="font-size:2.2rem;">8</div>
+                    </div>
+                    <div class="queue-token-box">
+                        <div class="label">Estimated Wait</div>
+                        <div class="number secondary" style="font-size:2.2rem;color:var(--warning);">40m</div>
+                    </div>
+                </div>
+
+                <div class="queue-visual">
+                    <span class="token-pill active">A-18</span>
+                    <i class="fas fa-chevron-right arrow"></i>
+                    <span class="token-pill">A-19</span>
+                    <i class="fas fa-chevron-right arrow"></i>
+                    <span class="token-pill">A-20</span>
+                    <i class="fas fa-chevron-right arrow"></i>
+                    <span class="token-pill">A-21</span>
+                    <i class="fas fa-chevron-right arrow"></i>
+                    <span class="token-pill">A-22</span>
+                    <i class="fas fa-chevron-right arrow"></i>
+                    <span class="token-pill">A-23</span>
+                    <i class="fas fa-chevron-right arrow"></i>
+                    <span class="token-pill">A-24</span>
+                    <i class="fas fa-chevron-right arrow"></i>
+                    <span class="token-pill">A-25</span>
+                    <i class="fas fa-chevron-right arrow"></i>
+                    <span class="token-pill">A-26</span>
+                    <i class="fas fa-chevron-right arrow"></i>
+                    <span class="token-pill yours">A-27 (You)</span>
+                </div>
+
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:16px;border-top:1px solid var(--gray-200);">
+                    <div style="display:flex;gap:24px;">
+                        <div><span style="color:var(--gray-500);font-size:0.85rem;">Total Waiting</span> <strong style="margin-left:8px;">9</strong></div>
+                        <div><span style="color:var(--gray-500);font-size:0.85rem;">Avg. Consultation</span> <strong style="margin-left:8px;">15 min</strong></div>
+                    </div>
+                    <span class="token-badge" style="background:#FEF3C7;color:#B45309;font-size:0.85rem;padding:8px 20px;">STATUS: WAITING</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= APPOINTMENT HISTORY ================= -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Appointment History</h2>
+                <p>View your past and upcoming appointments.</p>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Doctor</th>
+                            <th>Department</th>
+                            <th>Token</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>27 Oct 2026</td>
+                            <td>Dr. Ahmed Rahman</td>
+                            <td>Cardiology</td>
+                            <td><strong>A-27</strong></td>
+                            <td><span class="status-badge status-waiting">Waiting</span></td>
+                        </tr>
+                        <tr>
+                            <td>15 Oct 2026</td>
+                            <td>Dr. Sarah Chen</td>
+                            <td>Dermatology</td>
+                            <td>A-12</td>
+                            <td><span class="status-badge status-completed">Completed</span></td>
+                        </tr>
+                        <tr>
+                            <td>02 Oct 2026</td>
+                            <td>Dr. Michael Okonkwo</td>
+                            <td>Neurology</td>
+                            <td>A-05</td>
+                            <td><span class="status-badge status-completed">Completed</span></td>
+                        </tr>
+                        <tr>
+                            <td>20 Sep 2026</td>
+                            <td>Dr. Ahmed Rahman</td>
+                            <td>Cardiology</td>
+                            <td>A-18</td>
+                            <td><span class="status-badge status-cancelled">Cancelled</span></td>
+                        </tr>
+                        <tr>
+                            <td>10 Sep 2026</td>
+                            <td>Dr. Lisa Wong</td>
+                            <td>Pediatrics</td>
+                            <td>A-09</td>
+                            <td><span class="status-badge status-upcoming">Upcoming</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo" style="font-size:1.3rem;">
+                        <i class="fas fa-heartbeat"></i>
+                        <span>Medique</span>
+                    </div>
+                    <p>Smart clinic appointment and queue management system designed to reduce waiting time and improve patient care.</p>
+                    <div style="display:flex;gap:12px;margin-top:16px;">
+                        <a href="#" style="color:var(--gray-400);"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="color:var(--gray-400);"><i class="fab fa-facebook"></i></a>
+                        <a href="#" style="color:var(--gray-400);"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4>Product</h4>
+                    <div class="footer-links">
+                        <a href="#">Features</a>
+                        <a href="#">Pricing</a>
+                        <a href="#">For Doctors</a>
+                        <a href="#">For Clinics</a>
+                    </div>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <div class="footer-links">
+                        <a href="#">About Us</a>
+                        <a href="#">Careers</a>
+                        <a href="#">Blog</a>
+                        <a href="#">Contact</a>
+                    </div>
+                </div>
+                <div>
+                    <h4>Support</h4>
+                    <div class="footer-links">
+                        <a href="#">Help Center</a>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Status</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>&copy; 2026 Medique. All rights reserved.</span>
+                <span>Capstone Project Prototype</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Small interactive script to demonstrate queue mock (not real backend) -->
+    <script>
+        // simple mock: update "current token" every 5 seconds to show dynamic feel
+        // (only for demonstration – not real production)
+        (function() {
+            const currentTokenElement = document.querySelector('.hero-visual .token-value.highlight');
+            const queueCurrentElement = document.querySelector('.queue-tracker .queue-token-box .number');
+            const patientsAheadElements = document.querySelectorAll('.stat-item .stat-value');
+            // we'll just simulate a slight change on the queue tracker current token
+            const tokens = ['A-18', 'A-19', 'A-20', 'A-21', 'A-22'];
+            let index = 0;
+
+            function updateToken() {
+                if (index >= tokens.length) index = 0;
+                const newToken = tokens[index];
+                // update the queue tracker current token
+                if (queueCurrentElement) queueCurrentElement.textContent = newToken;
+                // also update the hero preview current token
+                if (currentTokenElement) currentTokenElement.textContent = newToken;
+                // update "Patients ahead" roughly (for demo)
+                const aheadElement = document.querySelector('.queue-stats .stat-item:nth-child(2) .stat-value');
+                if (aheadElement) {
+                    const ahead = Math.max(0, 8 - index);
+                    aheadElement.textContent = ahead;
+                }
+                index++;
+            }
+
+            // call every 8 seconds for gentle movement
+            setInterval(updateToken, 8000);
+        })();
+    </script>
+</body>
+</html>
