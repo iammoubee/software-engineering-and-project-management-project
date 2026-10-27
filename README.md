@@ -377,13 +377,13 @@ Since the current version is a front-end prototype, no backend installation is r
 Clone the repository:
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
+git clone https://github.com/iammoubee/software-engineering-and-project-management-project.git
 ```
 
 Go to the project directory:
 
 ```bash
-cd YOUR-REPOSITORY
+cd software-engineering-and-project-management-project
 ```
 
 Then open:
@@ -538,27 +538,6 @@ https://iammoubee.github.io/software-engineering-and-project-management-project/
 
 ---
 
-## Screenshots
-
-Add your project screenshots here:
-
-```markdown
-![Landing Page](assets/screenshots/landing-page.png)
-
-![Patient Dashboard](assets/screenshots/patient-dashboard.png)
-
-![Doctor Search](assets/screenshots/doctor-search.png)
-
-![Appointment Booking](assets/screenshots/appointment-booking.png)
-
-![Queue Tracking](assets/screenshots/queue-tracking.png)
-
-![Doctor Dashboard](assets/screenshots/doctor-dashboard.png)
-
-![Admin Dashboard](assets/screenshots/admin-dashboard.png)
-```
-
----
 
 ## Academic Information
 
